@@ -1,19 +1,19 @@
-from datetime import date
-
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render
 
+from posts.models import Post
 
-def hello_view(request: HttpRequest) -> HttpResponse:
+
+def main_page_view(request: HttpRequest) -> HttpResponse:
     if request.method == 'GET':
-        return HttpResponse('Hello! Its my project')
+        return render(request, 'layouts/index.html')
 
 
-def now_date_view(request: HttpRequest) -> HttpResponse:
+def posts_view(request: HttpRequest) -> HttpResponse:
     if request.method == 'GET':
-        return HttpResponse(date.today())
+        posts = Post.objects.all()
+        context = {
+            'posts': posts,
+        }
 
-
-def goodby_view(request: HttpRequest) -> HttpResponse:
-    if request.method == 'GET':
-        return HttpResponse('Goodby user!')
+        return render(request, 'posts/posts.html', context=context)
