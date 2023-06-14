@@ -17,8 +17,11 @@
         <div class="card-body">
             <h5 class="card-title">{{ post.title }}</h5>
             <h6 class="card-subtitle mb-2 text-body-secondary">
-                Rate: {{post.rate }}
+                Rate: {{ post.rate }}`
             </h6>
+            {% for hashtag in post.hashtags_list %}
+            <p>{{ hashtag.title }}</p>
+            {% endfor %}
             <a href="#" class="card-link">More</a>
             <a href="#" class="card-link">Another link</a>
         </div>

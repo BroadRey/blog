@@ -1,7 +1,7 @@
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render
 
-from posts.models import Post
+from posts.models import Hashtag, Post
 
 
 def main_page_view(request: HttpRequest) -> HttpResponse:
@@ -17,3 +17,14 @@ def posts_view(request: HttpRequest) -> HttpResponse:
         }
 
         return render(request, 'posts/posts.html', context=context)
+
+
+def hashtags_view(request: HttpRequest) -> HttpResponse:
+    if request.method == 'GET':
+        hashtags = Hashtag.objects.all()
+
+        context = {
+            'hashtags': hashtags,
+        }
+
+        return render(request, 'posts/hashtags.html', context=context)
