@@ -28,3 +28,17 @@ def hashtags_view(request: HttpRequest) -> HttpResponse:
         }
 
         return render(request, 'posts/hashtags.html', context=context)
+
+
+def post_detail_view(request: HttpRequest, pk: int) -> HttpResponse:
+    if request.method == 'GET':
+        try:
+            post = Post.objects.get(id=pk)
+        except Post.DoesNotExist:
+            return render(request, 'posts/detail.html')
+
+        context = {
+            'post': post,
+        }
+
+        return render(request, 'posts/detail.html', context=context)
