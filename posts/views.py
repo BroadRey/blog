@@ -6,7 +6,7 @@ from posts.models import Hashtag, Post
 
 def main_page_view(request: HttpRequest) -> HttpResponse:
     if request.method == 'GET':
-        return render(request, 'layouts/index.html')
+        return render(request, 'layouts/base.html')
 
 
 def posts_view(request: HttpRequest) -> HttpResponse:
