@@ -10,4 +10,5 @@ urlpatterns = [
     path('', main_page_view, name='home'),
     path('posts/', posts_view, name='posts'),
     path('hashtags/', hashtags_view, name='hashtags'),
+    path('posts/<int:id>/', post_detail_view, name='post_detail')
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
