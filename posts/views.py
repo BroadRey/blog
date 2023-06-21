@@ -1,6 +1,8 @@
 from django.http import HttpRequest, HttpResponse
-from django.shortcuts import render
+from django.shortcuts import redirect, render
+from django.urls import is_valid_path
 
+from posts.forms import PostCreateForm
 from posts.models import Hashtag, Post
 
 
@@ -42,3 +44,32 @@ def post_detail_view(request: HttpRequest, id: int) -> HttpResponse:
         }
 
         return render(request, 'posts/detail.html', context=context)
+
+
+def post_create_view(request: HttpRequest) -> HttpResponse:
+    if request.method == 'GET':
+        context = {
+            'form': PostCreateForm,
+        }
+
+        return render(request, 'posts/create.html', context)
+
+    if request.method == 'POST':
+        data, file = request.POST, request.FILES
+        form = PostCreateForm(data, file)
+
+        if form.is_valid():
+            Post.objects.create(
+                title=form.cleaned_data.get('title'),
+                description=form.cleaned_data.get('description'),
+                rate=form.cleaned_data.get('rate'),
+                image=form.cleaned_data.get('image')
+            )
+
+            return redirect('/posts/')
+
+        context = {
+            'form': form,
+        }
+
+        return render(request, 'posts/create.html', context={'form': form})
